@@ -7,16 +7,10 @@
     ```
     * json
     * re
-## 使用说明
-1. 修改参数
-```python
-username = ""           # 用户名
-password = ""           # 密码
-jtdz = ""               # 常住地址
-xjzdz = ""              # 当天居住地址
-```
+    * argparse
 
-2. 运行
+## 使用说明
+运行
 ```
-python3 main.py
+python3 main.py -u 用户名 -p 密码 -t 当天地址 -a 常住地址
 ```
