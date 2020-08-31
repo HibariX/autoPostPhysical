@@ -1,16 +1,18 @@
-__version__ = 0.1
+__version__ = 0.2
 
 import requests
 import re
 import json
+import sys
 
+if len(sys.argv) == 1:
+	print('请输入账号和密码')
+	exit()
 session = requests.Session()
 
 # user setting
-username = ""           # 用户名
-password = ""           # 密码
-jtdz = ""               # 常住地址
-xjzdz = ""              # 当天居住地址
+username = sys.argv[1]           # 用户名
+password = sys.argv[2]           # 密码
 form_data = {"entity": {}}
 # get html
 url = "https://authserver.jluzh.com/cas/login?service=https%3A%2F%2Fwork.jluzh.com%2Fdefault%2Fwork%2Fjlzh%2Fjkxxtb%2Fjkxxcj.jsp%3Fappload%3D0%26f%3Dapp"
@@ -58,8 +60,6 @@ form_data['entity'] = query_json
 # submit form(post)
 form_data['entity']["__type"] = "sdo:com.sudytech.work.jlzh.jkxxtb.jkxxcj.TJlzhJkxxtb"
 form_data['entity']["_ext"] = "{}"
-form_data['entity']['jtdz'] = jtdz
-form_data['entity']['xjzdz'] = xjzdz
 url = "https://work.jluzh.com/default/work/jlzh/jkxxtb/com.sudytech.portalone.base.db.saveOrUpdate.biz.ext"
 
 response = session.post(url=url, data=json.dumps(form_data))
