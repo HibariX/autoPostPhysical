@@ -7,10 +7,10 @@
     ```
     * json
     * re
-    * sys
+    * argparse
+
 ## 使用说明
+运行
 ```
-python3 main.py <username> <password>
-ef:
-python3 main.py 04190001 123456
+python3 main.py -u 用户名 -p 密码 -t 当天地址 -a 常住地址
 ```
