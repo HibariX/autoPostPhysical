@@ -1,9 +1,11 @@
-__version__ = 0.1
+__version__ = 0.3
 
 import requests
 import re
 import json
 import argparse
+import datetime
+
 
 # get arguments
 parser = argparse.ArgumentParser(description='自动填写健康表')
@@ -17,6 +19,10 @@ username = args.username        # 用户名
 password = args.password  		# 密码
 jtdz = args.permanentaddress    # 常住地址
 xjzdz = args.todayaddress       # 当天居住地址
+
+# get date & time
+today_date = datetime.datetime.now().strftime('%Y-%m-%d')
+cur_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
 session = requests.Session()
 
@@ -54,7 +60,7 @@ data = {
     'params': {
         'empcode': username
     },
-    "querySqlId": "com.sudytech.work.jlzh.jkxxtb.jkxxcj.queryToday",
+    "querySqlId": "com.sudytech.work.jlzh.jkxxtb.jkxxcj.queryNear",
 
 }
 session.headers['content-type'] = 'application/json'        # Request Payload
@@ -69,7 +75,7 @@ print("list_json", list_json)
 form_data = {
 	'entity':{
 		'bjmc': list_json['BJMC'],
-		'bt': list_json['BT'],
+		'bt': f"{today_date} {list_json['SQRMC']} 健康卡填报",
 		'bz': list_json['BZ'],
 		'cn': ["本人承诺登记后、到校前不再前往其他地区"],
 		'fdygh': list_json['FDYGH'],
@@ -94,8 +100,8 @@ form_data = {
 		'sqrid': list_json['SQRID'],
 		'sqrmc': list_json['SQRMC'],
 		'ssh': list_json['SSH'],
-		'tbrq': list_json['TBRQ'],
-		'tjsj': list_json['TJSJ'],
+		'tbrq': today_date,
+		'tjsj': cur_time,
 		'xb': "1",
 		'xjzdz': xjzdz,
 		'xrywz': "2",
